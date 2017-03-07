@@ -12,34 +12,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sys
 import os
-from flask import Flask, jsonify
+import json
+from flask import Flask
+from flask import jsonify
 
-app = Flask(__name__)
+sys.path.append(os.path.join(os.getcwd(),'..'))
+import watson_developer_cloud
+import watson_developer_cloud.natural_language_understanding.features.v1 as \
+    features
 
-@app.route('/')
-def Welcome():
-    return app.send_static_file('index.html')
+# In[3]:
+app = Flask("NLU App")
+ nlu = watson_developer_cloud.NaturalLanguageUnderstandingV1(
+   #version='2017-02-27',
+    #username='ddc3ed94-6032-417b-ac2e-ab7faa8ee11f',
+    #password='4ct36lkd1p4Z')
 
-@app.route('/myapp')
-def WelcomeToMyapp():
-    return 'Welcome again to my app running on Bluemix!'
+# In[6]:
 
-@app.route('/api/people')
-def GetPeople():
-    list = [
-        {'name': 'John', 'age': 28},
-        {'name': 'Bill', 'val': 26}
-    ]
-    return jsonify(results=list)
+response = nlu.analyze(
+    text='Bruce Banner is the Hulk and Bruce Wayne is BATMAN! '
+             'Superman fears not Banner, but Wayne.',
+    features=[features.Entities(), features.Keywords()])
+  
+    version='2017-02-27',
+     username=os.getenv('NATURAL_LANGUAGE_UNDERSTANDING_USERNAME'),
+     password=os.getenv('NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD') )
 
-@app.route('/api/people/<name>')
-def SayHello(name):
-    message = {
-        'message': 'Hello ' + name
-    }
-    return jsonify(results=message)
+     print(json.dumps(response, indent=2))
 
-port = os.getenv('PORT', '5000')
+     @app.route("/")
+     def eval_default():
+        response = nlu.analyze(
+              text='Bruce Banner is the Hulk and Bruce Wayne is BATMAN! '
+	    	      'Superman fears not Banner, but Wayne.',
+              features=[features.Entities(), features.Keywords()])
+        return jsonify(response)
+# In[ ]:
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=int(port))
+    app.run(host='0.0.0.0',debug=True,port=int(os.getenv('PORT',8080)))
