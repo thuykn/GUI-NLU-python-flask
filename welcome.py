@@ -26,9 +26,9 @@ import watson_developer_cloud.natural_language_understanding.features.v1 as \
 # In[3]:
 app = Flask("NLU App")
  nlu = watson_developer_cloud.NaturalLanguageUnderstandingV1(
-   version='2017-02-27')
-    #username='ddc3ed94-6032-417b-ac2e-ab7faa8ee11f',
-    #password='4ct36lkd1p4Z')
+   version='2017-02-27',
+    username='1cde75f8-52d6-4cff-8737-1ba58975d3e1',
+    password='qF0xq5mTkx3e')
 
 # In[6]:
 
@@ -37,9 +37,9 @@ response = nlu.analyze(
              'Superman fears not Banner, but Wayne.',
     features=[features.Entities(), features.Keywords()])
   
-    version='2017-02-27',
-     username=os.getenv('NATURAL_LANGUAGE_UNDERSTANDING_USERNAME'),
-     password=os.getenv('NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD') )
+    #version='2017-02-27',
+     #username=os.getenv('NATURAL_LANGUAGE_UNDERSTANDING_USERNAME'),
+     #password=os.getenv('NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD') )
 
      print(json.dumps(response, indent=2))
 
