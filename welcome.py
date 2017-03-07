@@ -26,7 +26,7 @@ import watson_developer_cloud.natural_language_understanding.features.v1 as \
 # In[3]:
 app = Flask("NLU App")
  nlu = watson_developer_cloud.NaturalLanguageUnderstandingV1(
-   #version='2017-02-27',
+   version='2017-02-27')
     #username='ddc3ed94-6032-417b-ac2e-ab7faa8ee11f',
     #password='4ct36lkd1p4Z')
 
